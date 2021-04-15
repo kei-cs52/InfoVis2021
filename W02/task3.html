@@ -1,0 +1,42 @@
+<html>
+    <head>
+        <title>W02: Task 3</title>
+    </head>
+    <body>
+        v1_x:<input type = "number" value = "1" id = "v1x"/>
+        v1_v:<input type = "number" value = "1" id = "v1y"/>
+        v1_z:<input type = "number" value = "1" id = "v1z"/><br>
+        v2_x:<input type = "number" value = "1" id = "v2x"/>
+        v2_y:<input type = "number" value = "2" id = "v2y"/>
+        v2_z:<input type = "number" value = "4" id = "v2z"/><br>
+        v3_x:<input type = "number" value = "1" id = "v3x"/>
+        v3_y:<input type = "number" value = "3" id = "v3y"/>
+        v3_z:<input type = "number" value = "9" id = "v3z"/><br>
+        <input type="button" value="Calculate" onclick="buttonClick()">
+        <script src="vec3.js"></script>
+        <script>
+            function buttonClick()
+            {
+                const v1x = document.getElementById("v1x").value;
+                const v1y = document.getElementById("v1y").value;
+                const v1z = document.getElementById("v1z").value;
+                const v2x = document.getElementById("v2x").value;
+                const v2y = document.getElementById("v2y").value;
+                const v2z = document.getElementById("v2z").value;
+                const v3x = document.getElementById("v3x").value;
+                const v3y = document.getElementById("v3y").value;
+                const v3z = document.getElementById("v3z").value;
+                var v1 = new Vec3(v1x,v1y,v1z);
+                var v2 = new Vec3(v2x,v2y,v2z);
+                var v3 = new Vec3(v3x,v3y,v3z);
+                var a = v2.subtract(v1);
+                var b = v3.subtract(v1);
+                var area = Math.sqrt( (a.x*a.x + a.y*a.y + a.z*a.z) * (b.x*b.x + b.y*b.y + b.z*b.z)
+                - (a.x * b.x + a.y * b.y + a.z * b.z) * (a.x * b.x + a.y * b.y + a.z * b.z)) / 2
+                alert(area);
+            }
+            button.onclick = buttonClick;
+            
+        </script>
+    </body>
+</html>
