@@ -67,13 +67,5 @@ class Vec3
         }
     }
 
-    triangle(v2,v3)
-    {
-        v12 = this.subtract(v2)
-        v13 = this.subtract(v3)
-        return 0.5 * Math.sqrt((v12.x^2 + v12.y^2 +v12.z^2)*(v13.x^2 + v13.y^2 +v13.z^2)-
-        (Math.sqrt(v12.x^2 + v12.y^2 +v12.z^2)*Math.sqrt(v13.x^2 + v13.y^2 +v13.z^2))^2);
-    }
-
     
 }
