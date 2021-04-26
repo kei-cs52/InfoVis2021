@@ -1,0 +1,32 @@
+<html>
+    <head>
+        <title>W04: Task 2</title>
+    </head>
+    <body>
+	<script src="https://d3js.org/d3.v4.min.js"></script>
+	<script>
+	var span = d3.select("body").append("span");
+    span.text("Daily change in the number of critically ill patients with COVID-19 infection (2020/2/5 - 2021/4/24)")
+        .style("font-size","20px")
+        .style("font-weight","bold");
+	d3.csv("https://kei-cs52.github.io/InfoVis2021/W04/w04_task2.csv", draw );
+	function draw(data){
+    var padding = 10;
+	var height = 20;
+	var svg = d3.select("body").append("svg")
+        .attr("width", 2000)
+        .attr("height", 13350);
+	 svg.selectAll("rect").data(data).enter().append("rect")
+	    .attr("x", 100)
+	    .attr("y", function(d,i){ return padding + i * ( height + padding ); })
+	    .attr("width", function(d){ return d.value; })
+	    .attr("height", height);
+
+     svg.selectAll("text").data(data).enter().append("text")
+        .text(function(d) { return d.label; })
+        .attr("x", 0)
+	    .attr("y", function(d,i){ return 1.5 * padding + height / 2 + i * ( height + padding ); })
+    }
+	</script>
+    </body>
+</html>
