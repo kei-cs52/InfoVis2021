@@ -6,7 +6,7 @@ d3.csv("https://kei-cs52.github.io/InfoVis2021/W04/data.csv")
             parent: '#drawing_region',
             width: 256,
             height: 256,
-            margin: {top:10, right:10, bottom:20, left:20}
+            margin: {top:10, right:10, bottom:50, left:50}
         };
 
         const scatter_plot = new ScatterPlot( config, data );
@@ -51,14 +51,26 @@ class ScatterPlot {
         self.xaxis = d3.axisBottom( self.xscale )
             .ticks(10);
 
+        self.xaxis_label = self.chart.append('text')
+            .attr('transform', `translate(${self.inner_width/2}, 
+            ${self.inner_height+35})`)
+            .style("text-anchor", "middle")
+            .text("X");
+
         self.xaxis_group = self.chart.append('g')
             .attr('transform', `translate(0, ${self.inner_height})`);
 
         self.yaxis = d3.axisLeft( self.yscale )
             .ticks(20);
 
+        self.yaxis_label = self.chart.append('text')
+            .attr('transform', `translate(-30, ${self.inner_height/2})`)
+            .style("text-anchor", "middle")
+            .text("Y");
+
         self.yaxis_group = self.chart.append('g')
             .attr('transform', `translate(${self.config.margin.right}, 0)`);
+
     }
 
     update() {
