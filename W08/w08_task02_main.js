@@ -1,4 +1,4 @@
-d3.csv("https://kei-cs52.github.io/InfoVis2021/W08/w08_task2_data.csv")
+d3.csv("https://vizlab-kobe-lecture.github.io/InfoVis2021/W04/data.csv")
     .then( data => {
         data.forEach( d => { d.x = +d.x; d.y = +d.y; });
 
@@ -28,6 +28,7 @@ class ScatterPlot {
         this.data = data;
         this.init();
     }
+    
 
     init() {
         let self = this;
@@ -53,6 +54,10 @@ class ScatterPlot {
 
         self.xaxis_group = self.chart.append('g')
             .attr('transform', `translate(0, ${self.inner_height})`);
+
+        const line = d3.line()
+            .x( d => d.x )
+            .y( d => d.y );
     }
 
     update() {
@@ -72,13 +77,10 @@ class ScatterPlot {
     render() {
         let self = this;
 
-        self.chart.selectAll("circle")
-            .data(self.data)
-            .enter()
-            .append("circle")
-            .attr("cx", d => self.xscale( d.x ) )
-            .attr("cy", d => self.yscale( d.y ) )
-            .attr("r", d => d.r );
+        self.append('path')
+            .attr('d', line(data))
+            .attr('stroke', 'black')
+            .attr('fill', 'none');
 
         self.xaxis_group
             .call( self.xaxis );

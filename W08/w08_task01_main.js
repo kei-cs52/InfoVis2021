@@ -5,26 +5,25 @@ d3.csv("https://kei-cs52.github.io/InfoVis2021/W08/data.csv")
         var config = {
             parent: '#drawing_region',
             width: 256,
-            height: 128,
-            margin: {top:10, right:10, bottom:20, left:60}
+            height: 256,
+            margin: {top:10, right:10, bottom:20, left:10}
         };
 
-        const bar_chart = new BarChart( config, data );
-        bar_chart.update();
+        const scatter_plot = new ScatterPlot( config, data );
+        scatter_plot.update();
     })
     .catch( error => {
         console.log( error );
     });
 
-
-class BarChart {
+class ScatterPlot {
 
     constructor( config, data ) {
         this.config = {
             parent: config.parent,
             width: config.width || 256,
             height: config.height || 256,
-            margin: config.margin || {top:10, right:10, bottom:20, left:20}
+            margin: config.margin || {top:10, right:10, bottom:10, left:10}
         }
         this.data = data;
         this.init();
@@ -44,24 +43,28 @@ class BarChart {
         self.inner_height = self.config.height - self.config.margin.top - self.config.margin.bottom;
 
         self.xscale = d3.scaleLinear()
-            .range([0, self.inner_width]);
+            .range( [0, self.inner_width] );
+
+        self.yscale = d3.scaleLinear()
+            .range( [0, self.inner_height] );
 
         self.xaxis = d3.axisBottom( self.xscale )
-            .ticks(5)
-            .tickSizeOuter(0);
+            .ticks(6);
 
         self.xaxis_group = self.chart.append('g')
             .attr('transform', `translate(0, ${self.inner_height})`);
-
-
-
     }
 
     update() {
         let self = this;
 
-        const max = d3.max( self.data, d => d.value );
-        self.xscale.domain( [0, max] );
+        const xmin = d3.min( self.data, d => d.x );
+        const xmax = d3.max( self.data, d => d.x );
+        self.xscale.domain( [xmin, xmax] );
+
+        const ymin = d3.min( self.data, d => d.y );
+        const ymax = d3.max( self.data, d => d.y );
+        self.yscale.domain( [ymin, ymax] );
 
         self.render();
     }
@@ -76,10 +79,10 @@ class BarChart {
             .attr("x", 0)
             .attr("y", d => yscale(d.label))
             .attr("width", d => xscale(d.value))
-	        .attr("height", yscale.bandwidth());
+            .attr("height", yscale.bandwidth());
+        
 
         self.xaxis_group
             .call( self.xaxis );
-
     }
 }
