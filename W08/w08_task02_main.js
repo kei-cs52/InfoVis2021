@@ -1,4 +1,4 @@
-d3.csv("https://kei-cs52.github.io/InfoVis2021/W04/w08_task2_data.csv")
+d3.csv("https://kei-cs52.github.io/InfoVis2021/W08/w08_task2_data.csv")
     .then( data => {
         data.forEach( d => { d.x = +d.x; d.y = +d.y; });
 

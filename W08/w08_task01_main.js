@@ -1,6 +1,6 @@
 d3.csv("https://kei-cs52.github.io/InfoVis2021/W08/data.csv")
     .then( data => {
-        data.forEach( d => { d.label = +d.label; d.value = +d.value; });
+        data.forEach( d => {d.value = +d.value; });
 
         var config = {
             parent: '#drawing_region',
@@ -46,21 +46,13 @@ class BarChart {
         self.xscale = d3.scaleLinear()
             .range([0, self.inner_width]);
 
-        self.yscale = d3.scaleBand()
-            .range([0, self.inner_height])
-            .paddingInner(0.1);
-
         self.xaxis = d3.axisBottom( self.xscale )
             .ticks(5)
-            .tickSizeOuter(0);
-
-        self.yaxis = d3.axisLeft( self.yscale )
             .tickSizeOuter(0);
 
         self.xaxis_group = self.chart.append('g')
             .attr('transform', `translate(0, ${self.inner_height})`);
 
-        self.yaxis_group = self.chart.append('g');
 
 
     }
@@ -70,8 +62,6 @@ class BarChart {
 
         const max = d3.max( self.data, d => d.value );
         self.xscale.domain( [0, max] );
-        const map = data.map(d => d.label)
-        self.yscale.domain(map)
 
         self.render();
     }
@@ -91,7 +81,5 @@ class BarChart {
         self.xaxis_group
             .call( self.xaxis );
 
-        self.yaxis_group
-            .call( self.yaxis );
     }
 }
