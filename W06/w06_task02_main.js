@@ -1,6 +1,6 @@
 d3.csv("https://kei-cs52.github.io/InfoVis2021/W04/data.csv")
     .then( data => {
-        data.forEach( d => { d.x = +d.x; d.y = +d.y; });
+        data.forEach( d => { d.x = +d.x; d.value = +d.y; });
 
         var config = {
             parent: '#drawing_region',
@@ -80,8 +80,8 @@ class ScatterPlot {
         const xmax = d3.max( self.data, d => d.x );
         self.xscale.domain( [xmin, xmax] );
 
-        const ymin = d3.min( self.data, d => d.y );
-        const ymax = d3.max( self.data, d => d.y );
+        const ymin = d3.min( self.data, d => d.value );
+        const ymax = d3.max( self.data, d => d.value );
         self.yscale.domain( [ymax, ymin] );
 
         self.render();
@@ -95,7 +95,7 @@ class ScatterPlot {
             .enter()
             .append("circle")
             .attr("cx", d => self.xscale( d.x ) )
-            .attr("cy", d => self.yscale( d.y ) )
+            .attr("cy", d => self.yscale( d.value ) )
             .attr("r", d => d.r );
 
         self.xaxis_group
