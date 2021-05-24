@@ -21,7 +21,7 @@ circles
     .on('mouseover', (e,d) => {
         d3.select('#tooltip')
             .style('opacity', 1)
-            .html(`<div class="tooltip-label">Position</div>(${d.x}, ${d.y})`);
+            .html(`<div class="tooltip-label">Date</div>${d.label}`);
     })
     .on('mousemove', (e) => {
         const padding = 10;
