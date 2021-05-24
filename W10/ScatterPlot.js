@@ -91,18 +91,35 @@ class ScatterPlot {
     render() {
         let self = this;
 
-        self.chart.selectAll("circle")
+        let circles = self.chart.selectAll("circle")
             .data(self.data)
             .enter()
             .append("circle")
             .attr("cx", d => self.xscale( d.x ) )
             .attr("cy", d => self.yscale( d.y ) )
             .attr("r", d => 5 );
-
+        circles
+            .on('mouseover', (e,d) => {
+                d3.select('#tooltip')
+                    .style('opacity', 1)
+                    .html(`<div class="tooltip-label">Date</div>${d.label}`);
+            })
+            .on('mousemove', (e) => {
+                const padding = 10;
+                d3.select('#tooltip')
+                    .style('left', (e.pageX + padding) + 'px')
+                    .style('top', (e.pageY + padding) + 'px');
+            })
+            .on('mouseleave', () => {
+                d3.select('#tooltip')
+                    .style('opacity', 0);
+            });
+        
         self.xaxis_group
             .call( self.xaxis );
 
         self.yaxis_group
             .call( self.yaxis );
+
     }
 }

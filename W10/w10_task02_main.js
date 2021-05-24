@@ -7,9 +7,9 @@ d3.csv("https://kei-cs52.github.io/InfoVis2021/W10/w10_task02_data.csv")
             width: 512,
             height: 512,
             margin: {top:25, right:10, bottom:50, left:60},
-            title: 'Sample Data',
-            xlabel: 'X label',
-            ylabel: 'Y label'
+            title: 'patients and severe patients of COVID-19',
+            xlabel: 'patients',
+            ylabel: 'severe patients'
         };
         console.log(data);
 
