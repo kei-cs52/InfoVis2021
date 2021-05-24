@@ -1,6 +1,6 @@
 d3.csv("https://kei-cs52.github.io/InfoVis2021/W10/w10_task02_data.csv")
     .then( data => {
-        data.forEach( d => {d.x = +d.value1; d.y = +d.value2;});
+        data.forEach( d => {d.x = +d.x; d.y = +d.y;});
 
         var config = {
             parent: '#drawing_region',

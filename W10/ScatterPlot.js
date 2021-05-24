@@ -97,7 +97,7 @@ class ScatterPlot {
             .append("circle")
             .attr("cx", d => self.xscale( d.x ) )
             .attr("cy", d => self.yscale( d.y ) )
-            .attr("r", d => d.r );
+            .attr("r", d => 5 );
 
         self.xaxis_group
             .call( self.xaxis );
