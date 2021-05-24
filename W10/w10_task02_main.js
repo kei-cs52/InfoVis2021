@@ -1,6 +1,14 @@
-d3.csv("https://vizlab-kobe-lecture.github.io/InfoVis2021/W04/data.csv")
+d3.csv("https://kei-cs52.github.io/InfoVis2021/W10/w10_task01.csv")
     .then( data => {
-        data.forEach( d => { d.x = +d.x; d.y = +d.y; });
+        data.forEach( d => { d.label = +d.label; d.value1 = +d.value; });
+    })
+    .catch( error => {
+        console.log( error );
+    });
+
+d3.csv("https://kei-cs52.github.io/InfoVis2021/W10/w10_task02.csv")
+    .then( data => {
+        data.forEach( d => {d.value2 = +d.value; });
 
         var config = {
             parent: '#drawing_region',

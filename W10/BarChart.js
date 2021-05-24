@@ -103,33 +103,6 @@ class BarChart {
         self.yaxis_group.call(self.yaxis);
     }
 
-    reverse() {
-        let self = this;
-        const data_reversed = self.data.reverse();
-        console.log(data_reversed[0]);
-
-        const space = 10;
-        const xmin = 0;
-        const xmax = d3.max(data_reversed, d => d.value) + space;
-        self.xscale.domain([xmin, xmax]);
-
-        const items = data_reversed.map(d => d.label);
-        self.yscale.domain(items);
-
-        const bar_color = 'salmonpink';
-        self.chart.selectAll("rect")
-            .data(data_reversed)
-            .enter()
-            .append("rect")
-            .attr("x", 0)
-            .attr("y", d => self.yscale(d.label))
-            .attr("width", d => self.xscale(d.value))
-            .attr("height", self.yscale.bandwidth())
-            .attr("fill", bar_color);
-
-        self.xaxis_group.call(self.xaxis);
-        self.yaxis_group.call(self.yaxis);
-    }
 
     
 }
