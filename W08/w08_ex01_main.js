@@ -50,6 +50,6 @@ const yaxis_group = chart.append('g')
 chart.selectAll("rect").data(data).enter()
     .append("rect")
     .attr("x", 0)
-    .attr("y", d => yscale(d.label))
+    .attr("y", function(d,i){ return 10 + i * 30; })
     .attr("width", d => xscale(d.value))
     .attr("height", yscale.bandwidth());
