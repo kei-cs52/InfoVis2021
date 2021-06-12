@@ -82,14 +82,17 @@ class LineChart {
         const ymax = d3.max(self.data, d => d.y) + space;
         self.yscale.domain([ymax, ymin]);
 
-        self.line = d3.line()
+        self.line1 = d3.line()
             .x( d => self.xscale(d.x) )
             .y( d => self.yscale(d.y) );
 
-        self.area = d3.area()
+        self.line2 = d3.line()
             .x( d => self.xscale(d.x) )
-            .y1( d => self.yscale(d.y) )
-            .y0( self.inner_height );
+            .y( d => self.yscale(d.y2) );
+
+        self.line3 = d3.line()
+            .x( d => self.xscale(d.x) )
+            .y( d => self.yscale(d.y3) );
 
         self.render();
     }
@@ -97,21 +100,27 @@ class LineChart {
     render() {
         let self = this;
 
-        const area_color = 'mistyrose';
-        self.chart.append("path")
-            .attr('d', self.area(self.data))
-            .attr('stroke', area_color)
-            .attr('fill', area_color);
-
-        const line_width = 3;
+        const line_width = 1;
         const line_color = 'firebrick';
         self.chart.append("path")
-            .attr('d', self.line(self.data))
-            .attr('stroke', line_color)
+            .attr('d', self.line1(self.data))
+            .attr('stroke', 'darkorange')
             .attr('stroke-width', line_width)
             .attr('fill', 'none');
 
-        const circle_radius = 5;
+        self.chart.append("path")
+            .attr('d', self.line2(self.data))
+            .attr('stroke', line_color)
+            .attr('stroke-width', 'firebrick')
+            .attr('fill', 'none');
+
+        self.chart.append("path")
+            .attr('d', self.line3(self.data))
+            .attr('stroke', 'black')
+            .attr('stroke-width', line_width)
+            .attr('fill', 'none');
+
+        const circle_radius = 1;
         const circle_color = 'firebrick';
         self.chart.selectAll("circle")
             .data(self.data)
