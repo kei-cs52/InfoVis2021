@@ -104,14 +104,14 @@ class LineChart {
         const line_color = 'firebrick';
         self.chart.append("path")
             .attr('d', self.line1(self.data))
-            .attr('stroke', 'darkorange')
+            .attr('stroke', line_color)
             .attr('stroke-width', line_width)
             .attr('fill', 'none');
 
         self.chart.append("path")
             .attr('d', self.line2(self.data))
             .attr('stroke', line_color)
-            .attr('stroke-width', 'firebrick')
+            .attr('stroke-width', line_width)
             .attr('fill', 'none');
 
         self.chart.append("path")
