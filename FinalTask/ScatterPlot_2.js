@@ -71,7 +71,6 @@ class ScatterPlot {
             .attr('text-anchor', 'middle')
             .attr('dy', '1em')
             .text( self.config.ylabel );
-
     }
 
     update() {
@@ -86,6 +85,7 @@ class ScatterPlot {
         const ymax = d3.max( self.data, d => d.y ) + space;
         self.yscale.domain( [ymax, ymin] );
 
+        self.brush = d3.brush();
         self.render();
     }
 
@@ -115,6 +115,7 @@ class ScatterPlot {
                 d3.select('#tooltip')
                     .style('opacity', 0);
             });
+        
         
         self.xaxis_group
             .call( self.xaxis );

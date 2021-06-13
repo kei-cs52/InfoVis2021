@@ -19,7 +19,7 @@ d3.csv("https://kei-cs52.github.io/InfoVis2021/FinalTask/data.csv")
 
 d3.csv("https://kei-cs52.github.io/InfoVis2021/FinalTask/data2.csv")
     .then( data => {
-        data.forEach( d => { d.x = +d.x; d.y = +d.y;});
+        data.forEach( d => { d.x = +d.x; d.y = +d.y; d.date =+d.date;});
         var config = {
             parent: '#drawing_region2',
             width: 400,
