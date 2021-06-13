@@ -69,6 +69,15 @@ class BarChart {
             .attr('text-anchor', 'middle')
             .attr('dy', '1em')
             .text( self.config.ylabel );
+
+        let timeparser = d3.timeParse("%Y/%m/%d");
+        // x軸の目盛りの表示フォーマット
+        let format = d3.timeFormat("%Y/%m");
+        // データをパースします
+        dataset = dataset.map(function(d){
+            // 日付のデータをパース
+            return  { date: timeparser(d.date), value:d.value } ;
+        });
     }
 
     update() {

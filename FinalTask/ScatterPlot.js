@@ -1,5 +1,6 @@
-class LineChart {
-    constructor (config, data) {
+class ScatterPlot {
+
+    constructor( config, data ) {
         this.config = {
             parent: config.parent,
             width: config.width || 256,
@@ -8,7 +9,7 @@ class LineChart {
             title: config.title || '',
             xlabel: config.xlabel || '',
             ylabel: config.ylabel || ''
-        };
+        }
         this.data = data;
         this.init();
     }
@@ -16,7 +17,7 @@ class LineChart {
     init() {
         let self = this;
 
-        self.svg = d3.select(self.config.parent)
+        self.svg = d3.select( self.config.parent )
             .attr('width', self.config.width)
             .attr('height', self.config.height);
 
@@ -27,18 +28,20 @@ class LineChart {
         self.inner_height = self.config.height - self.config.margin.top - self.config.margin.bottom;
 
         self.xscale = d3.scaleLinear()
-            .range([0, self.inner_width]);
+            .range( [0, self.inner_width] );
 
         self.yscale = d3.scaleLinear()
-            .range([0, self.inner_height]);
+            .range( [0, self.inner_height] );
 
-        self.xaxis = d3.axisBottom(self.xscale)
-            .ticks(5)
-            .tickSizeOuter(0);
+        self.xaxis = d3.axisBottom( self.xscale )
+            .ticks(3)
+            .tickSize(5)
+            .tickPadding(5);
 
-        self.yaxis = d3.axisLeft(self.yscale)
-            .ticks(5)
-            .tickSizeOuter(0);
+        self.yaxis = d3.axisLeft( self.yscale )
+            .ticks(3)
+            .tickSize(5)
+            .tickPadding(5);
 
         self.xaxis_group = self.chart.append('g')
             .attr('transform', `translate(0, ${self.inner_height})`);
@@ -73,26 +76,14 @@ class LineChart {
     update() {
         let self = this;
 
-        const space = 5;
-        const xmin = d3.min(self.data, d => d.x) - space;
-        const xmax = d3.max(self.data, d => d.x) + space;
-        self.xscale.domain([xmin, xmax]);
+        const space = 10;
+        const xmin = d3.min( self.data, d => d.x ) - space;
+        const xmax = d3.max( self.data, d => d.x ) + space;
+        self.xscale.domain( [xmin, xmax] );
 
-        const ymin = d3.min(self.data, d => d.y) - space;
-        const ymax = d3.max(self.data, d => d.y) + space;
-        self.yscale.domain([ymax, ymin]);
-
-        self.line = d3.line()
-            .x( d => self.xscale(d.x) )
-            .y( d => self.yscale(d.y) );
-
-        self.line2 = d3.line()
-            .x( d => self.xscale(d.x) )
-            .y( d => self.yscale(d.y2) );
-
-        self.line3 = d3.line()
-            .x( d => self.xscale(d.x) )
-            .y( d => self.yscale(d.y3) );
+        const ymin = d3.min( self.data, d => d.y ) - space;
+        const ymax = d3.max( self.data, d => d.y ) + space;
+        self.yscale.domain( [ymax, ymin] );
 
         self.render();
     }
@@ -100,37 +91,35 @@ class LineChart {
     render() {
         let self = this;
 
-        const line_width = 1;
-        self.chart.append("path")
-            .attr('d', self.line(self.data))
-            .attr('stroke', 'firebrick')
-            .attr('stroke-width', line_width)
-            .attr('fill', 'none');
-
-        self.chart.append("path")
-            .attr('d', self.line2(self.data))
-            .attr('stroke', 'darkorange')
-            .attr('stroke-width', line_width)
-            .attr('fill', 'none');
-
-        self.chart.append("path")
-            .attr('d', self.line3(self.data))
-            .attr('stroke', 'black')
-            .attr('stroke-width', line_width)
-            .attr('fill', 'none');
-
-        const circle_radius = 1;
-        const circle_color = 'firebrick';
-        self.chart.selectAll("circle")
+        let circles = self.chart.selectAll("circle")
             .data(self.data)
             .enter()
             .append("circle")
-            .attr('cx', self.line.x())
-            .attr('cy', self.line.y())
-            .attr('r', circle_radius)
-            .attr('fill', circle_color);
+            .attr("cx", d => self.xscale( d.x ) )
+            .attr("cy", d => self.yscale( d.y ) )
+            .attr("r", d => 5 );
+        circles
+            .on('mouseover', (e,d) => {
+                d3.select('#tooltip')
+                    .style('opacity', 1)
+                    .html(`<div class="tooltip-label">Date</div>${d.label}`);
+            })
+            .on('mousemove', (e) => {
+                const padding = 10;
+                d3.select('#tooltip')
+                    .style('left', (e.pageX + padding) + 'px')
+                    .style('top', (e.pageY + padding) + 'px');
+            })
+            .on('mouseleave', () => {
+                d3.select('#tooltip')
+                    .style('opacity', 0);
+            });
+        
+        self.xaxis_group
+            .call( self.xaxis );
 
-        self.xaxis_group.call(self.xaxis);
-        self.yaxis_group.call(self.yaxis);
+        self.yaxis_group
+            .call( self.yaxis );
+
     }
 }
