@@ -97,12 +97,12 @@ class ScatterPlot {
             .append("circle")
             .attr("cx", d => self.xscale( d.x ) )
             .attr("cy", d => self.yscale( d.y ) )
-            .attr("r", d => 5 );
+            .attr("r", d => 2 );
         circles
             .on('mouseover', (e,d) => {
                 d3.select('#tooltip')
                     .style('opacity', 1)
-                    .html(`<div class="tooltip-label">Date</div>${d.label}`);
+                    .html(`<div class="tooltip-label">Date</div>${d.date}`);
             })
             .on('mousemove', (e) => {
                 const padding = 10;
