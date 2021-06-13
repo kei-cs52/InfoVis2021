@@ -10,15 +10,16 @@ d3.csv("https://kei-cs52.github.io/InfoVis2021/FinalTask/data3.csv")
             xlabel: 'X label',
             ylabel: 'Y label'
         };
-        const line_chart = new LineChart( config, data );
+        var line_chart = new LineChart( config, data );
         line_chart.update();
         d3.select('#sort1')
             .on('click', d => {
-                d3.select('#drawing_region').selectAll("rect").remove();
+                d3.select('#drawing_region').selectAll("circle").remove();
+                d3.select('#drawing_region').selectAll("path").remove();
                 d3.select('#drawing_region').selectAll("text").remove();
-                line_chart = new LineChart(config, data.sort(function(a,b)
-                {return(b.s1-a.s1);}));
-                console.log(data)
+                data = data.sort(function(a,b){return(b.s1-a.s1);});
+                line_chart = new LineChart(config, data);
+                console.log([...Array(479).keys()])
                 line_chart.update();
             });
         
