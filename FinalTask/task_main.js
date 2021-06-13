@@ -1,6 +1,6 @@
-d3.csv("https://kei-cs52.github.io/InfoVis2021/FinalTask/data.csv")
+d3.csv("https://kei-cs52.github.io/InfoVis2021/FinalTask/data3.csv")
     .then( data => {
-        data.forEach( d => { d.y = +d.value2; d.y2 = +d.value3; d.y3 = +d.value4;});
+        data.forEach( d => { d.y = +d.value2; d.y2 = +d.value3; d.y3 = +d.value4; d.s1 = +d.s1; d.s2 = +d.s2; d.s3 = +d.s3;});
         var config = {
             parent: '#drawing_region',
             width: 1024,
@@ -17,10 +17,11 @@ d3.csv("https://kei-cs52.github.io/InfoVis2021/FinalTask/data.csv")
                 d3.select('#drawing_region').selectAll("rect").remove();
                 d3.select('#drawing_region').selectAll("text").remove();
                 line_chart = new LineChart(config, data.sort(function(a,b)
-                {return(b.y3/(b.y+1)-a.y3/(a.y+1));}));
+                {return(b.s1-a.s1);}));
                 console.log(data)
                 line_chart.update();
             });
+        
     })
     .catch( error => {
         console.log( error );
