@@ -26,7 +26,6 @@ class ScatterPlot {
 
         self.inner_width = self.config.width - self.config.margin.left - self.config.margin.right;
         self.inner_height = self.config.height - self.config.margin.top - self.config.margin.bottom;
-
         self.xscale = d3.scaleLinear()
             .range( [0, self.inner_width] );
 
@@ -93,7 +92,9 @@ class ScatterPlot {
     render() {
         let self = this;
 
-        let circles = self.chart.selectAll("circle")
+        let circles = self.chart
+            .attr("fill-opacity", 0.3)
+            .selectAll("circle")
             .data(self.data)
             .enter()
             .append("circle")

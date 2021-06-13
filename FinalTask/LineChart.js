@@ -103,13 +103,13 @@ class LineChart {
         const line_width = 1;
         self.chart.append("path")
             .attr('d', self.line(self.data))
-            .attr('stroke', 'firebrick')
+            .attr('stroke', 'darkorange')
             .attr('stroke-width', line_width)
             .attr('fill', 'none');
 
         self.chart.append("path")
             .attr('d', self.line2(self.data))
-            .attr('stroke', 'darkorange')
+            .attr('stroke', 'firebrick')
             .attr('stroke-width', line_width)
             .attr('fill', 'none');
 
@@ -120,15 +120,34 @@ class LineChart {
             .attr('fill', 'none');
 
         const circle_radius = 1;
-        const circle_color = 'firebrick';
-        self.chart.selectAll("circle")
+        let circles = self.chart.selectAll("circle")
             .data(self.data)
             .enter()
             .append("circle")
-            .attr('cx', self.line.x())
-            .attr('cy', self.line.y())
+            .attr('cx', self.line3.x())
+            .attr('cy', self.line3.y())
             .attr('r', circle_radius)
-            .attr('fill', circle_color);
+            .attr('fill', 'black');
+        
+        circles
+            .on('mouseover', (e,d) => {
+                d3.select('#tooltip')
+                    .style('opacity', 1)
+                    .html(`<div class="tooltip-label">Date</div>${d.date}
+                    <div class="tooltip-label">Patients</div>${d.y}
+                    <div class="tooltip-label">Severe patients</div>${d.y2}
+                    <div class="tooltip-label">Deaths</div>${d.y3}`);
+            })
+            .on('mousemove', (e) => {
+                const padding = 10;
+                d3.select('#tooltip')
+                    .style('left', (e.pageX + padding) + 'px')
+                    .style('top', (e.pageY + padding) + 'px');
+            })
+            .on('mouseleave', () => {
+                d3.select('#tooltip')
+                    .style('opacity', 0);
+            });
 
         self.xaxis_group.call(self.xaxis);
         self.yaxis_group.call(self.yaxis);
