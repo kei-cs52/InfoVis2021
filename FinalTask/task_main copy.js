@@ -12,15 +12,6 @@ d3.csv("https://kei-cs52.github.io/InfoVis2021/FinalTask/data.csv")
         };
         const line_chart = new LineChart( config, data );
         line_chart.update();
-        d3.select('#sort1')
-            .on('click', d => {
-                d3.select('#drawing_region').selectAll("rect").remove();
-                d3.select('#drawing_region').selectAll("text").remove();
-                line_chart = new LineChart(config, data.sort(function(a,b)
-                {return(b.y3/(b.y+1)-a.y3/(a.y+1));}));
-                console.log(data)
-                line_chart.update();
-            });
     })
     .catch( error => {
         console.log( error );
